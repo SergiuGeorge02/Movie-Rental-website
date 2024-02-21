@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account - MovieMatrix</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="header">
+    <div class="header-content">
+      <div class="logo">
+        <h1>MovieMatrix</h1>
+      </div>
+      <ul class="nav-area">
+        <li><a href="/login.php">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="registration">
+  <h1 class="title">Create an Account</h1>
+  <form action="register.php" class="register" name="registrationForm" method="post">
+    <span class="form-label">First Name</span>
+    <br class="form-fields" />
+    <input type="text" class="form-input" name="firstName" />
+    <br />
+    <span class="form-label">Last Name</span>
+    <br class="form-fields" />
+    <input type="text" class="form-input" name="lastName" />
+    <br />
+    <span class="form-label">Enter your Email</span>
+    <br class="form-fields" />
+    <input type="email" class="form-input" name="email" />
+    <br />
+    <span class="form-label">Password</span>
+    <br class="form-fields" />
+    <input type="password" class="form-input" name="password" />
+    <br />
+    <span class="form-label">Confirm Password</span>
+    <br class="form-fields" />
+    <input type="password" class="form-input" name="confirmPassword" />
+    <br />
+    <br>
+    <input type="checkbox" name="agreeCheckbox"><span class="form-label"> I agree to the terms and services</span>
+    <br />
+    <br>
+    <button class="login-submit" type="button">Register</button>
+    <br class="form-fields" />
+  </form>
+  <?php if (isset($errorMessage)): ?>
+    <div class="error-message">
+        <?php echo $errorMessage; ?>
+    </div>
+<?php endif; ?>
+  <div class="space"></div>
+</div>
+<div class="footer-section">
+  <h1 class="footer-logo">MovieMatrix</h1>
+  <p class="credits">© Copyright MovieMatrix Entertainment 2023</p>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var registerButton = document.querySelector('.login-submit');
+    var form = document.forms['registrationForm'];
+
+    registerButton.addEventListener('click', function (event) {
+
+      event.preventDefault();
+
+
+      var firstName = form.elements['firstName'];
+      var lastName = form.elements['lastName'];
+      var email = form.elements['email'];
+      var password = form.elements['password'];
+      var confirmPassword = form.elements['confirmPassword'];
+      var agreeCheckbox = form.elements['agreeCheckbox'];
+
+      if (!firstName.value || !lastName.value || !email.value || !password.value || !confirmPassword.value || !agreeCheckbox.checked) {
+        alert('Please fill in all fields and agree to the terms and services.');
+        return;
+      }
+
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.value)) {
+        alert('Please enter a valid email address.');
+        email.focus(); 
+        return;
+      }
+
+      if (password.value.length < 5) {
+        alert('Password must be at least 5 characters long.');
+        password.focus(); 
+        return;
+      }
+
+      if (password.value !== confirmPassword.value) {
+        alert('Passwords do not match.');
+        confirmPassword.focus();
+        return;
+      }
+
+
+      form.submit();
+    });
+  });
+</script>
+</body>
+</html>
